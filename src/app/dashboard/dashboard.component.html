@@ -1,0 +1,158 @@
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard">Customer List</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/add">ADD Customer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Contact</a>
+          </li>  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Dropdown</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Link</a></li>
+              <li><a class="dropdown-item" href="#">Another link</a></li>
+              <li><a class="dropdown-item" href="#">A third link</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container mt-3">
+    <h1 style="text-align: center;"><strong>CUSTOMER LIST</strong></h1>
+    <button style="text-align: right-end;" class="btn btn-outline-info  btn-rounded" (click)="addCustomer(content1)">ADD CUSTOMER
+    </button>
+              
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Customer_ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Country</th>
+          <th>Created Date</th>
+        </tr>
+        </thead>
+        <tbody>
+      
+        <tr *ngFor="let u of result">
+          <td>{{u.Customer_ID}}</td>
+          <td>{{u.FirstName}}</td>
+          <td>{{u.LastName}}</td>
+          <td>{{u.Country}}</td>
+          <td>{{u.Created_Date}}</td>
+          <td> <button class="btn btn-outline-info  btn-rounded" (click)="gotoupdate(content2,u.Customer_ID)"><i class="fas fa-pen " ></i>Update</button></td>
+          <td><button  class="btn btn-outline-danger btn-rounded" (click)="delete(u.Customer_ID)"><i class="fas fa-trash "></i>Delete</button></td>
+          <td><button  class="btn btn-outline-danger btn-rounded" (click)="open(content,u.Customer_ID)"><i class="fas fa-trash "></i>View</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #content let-modal>
+    
+    <div class="modal-body">
+      <div class="container mt-3">
+        <div class="card" style="width:400px">
+          <img class="card-img-top" src="https://www.w3schools.com/bootstrap5/img_avatar3.png" alt="Card image" style="width:100%">
+          <div class="card-body">
+            <h4 class="card-title">First Name:&nbsp;&nbsp; {{result12.firstName}}</h4>
+            <h4 class="card-title">Last Name:&nbsp;&nbsp;{{result12.lastName}}</h4>
+            <p class="card-text">Country:&nbsp;&nbsp;{{result12.country}}</p>
+            <p class="card-text">DataCreated:&nbsp;&nbsp;{{result12.created_Date}}</p>
+            <a href="#" class="btn btn-primary" (click)="backtoView()">BackToView</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+
+  <ng-template #content1 let-modal >
+    <div class="modal-header modal-lg" style="width:80%; height: 80%;">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body modal-lg">
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-sm-0"></div>
+          <div class="col-sm-12 border">
+            <h2 style="text-align: center;color: rgb(109, 170, 150);"><strong>ADD NEW CUSTOMER</strong></h2>
+            <form [formGroup]="AddCustomer" (ngSubmit)="onSubmit()">
+              <div class="row mb-3 mt-3">
+                <div class="col">
+                  <label  for="FirstName"><strong>First Name</strong></label>
+                  <input type="text" id="FirstName" class="form-control" name="FirstName" formControlName="FirstName" placeholder="First Name">
+                </div>
+              <div class="col">
+                 <label  for="LastName"><strong>Last Name</strong></label>
+                 <input type="text" id="LastName" class="form-control" name="LastName" formControlName="LastName" placeholder="Last Name">
+              </div>
+            </div>
+            <div class="rozzzw mb-3 mt-3">
+              <div class="col">
+                <label  for="Country"><strong>Country</strong></label>
+                <input type="text" id="Country" class="form-control" name="Country" formControlName="Country" placeholder="Country">
+            </div>  
+          </div>
+          <p>
+            <button type="submit" style="text-align: center;" class="btn btn-success">Submit</button>
+          </p>
+        </form>
+      </div>
+      <div class="col-sm-0 modal-lg"></div>
+      </div>
+    </div>
+  </ng-template>
+  
+
+  <ng-template #content2 let-modal >
+    <div class="modal-header modal-lg" style="width:80%; height: 80%;">
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body modal-lg">
+      <div class="row" style="margin-top: 3%;">
+        <div class="col-sm-0"></div>
+          <div class="col-sm-12 border">
+            <h2 style="text-align: center;color: rgb(109, 170, 150);"><strong>UPDATE CUSTOMER</strong></h2>
+            <form [formGroup]="updateCustomer" (ngSubmit)="onSubmit1()">
+              <div class="row mb-3 mt-3">
+                <div class="col">
+                  <label  for="FirstName"><strong>First Name</strong></label>
+                  <input type="text" id="FirstName" class="form-control" name="FirstName" formControlName="FirstName" placeholder="First Name">
+                </div>
+                <div class="col">
+                  <label  for="LastName"><strong>Last Name</strong></label>
+                  <input type="text" id="LastName" class="form-control" name="LastName" formControlName="LastName" placeholder="Last Name">
+                </div>
+              </div>
+              <div class="rozzzw mb-3 mt-3">
+                <div class="col">
+                  <label  for="Country"><strong>Country</strong></label>
+                  <input type="text" id="Country" class="form-control" name="Country" formControlName="Country" placeholder="Country">
+                </div>
+              </div>
+              <p>
+                   <button type="submit" style="text-align: center;" class="btn btn-success">Submit</button>
+              </p> 
+            </form>
+          </div>
+          <div class="col-sm-0"></div>
+          </div>
+      </div>
+    </ng-template>
+    
